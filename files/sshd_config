@@ -1,0 +1,31 @@
+
+Port 22
+ServerKeyBits 4096
+Protocol 2
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+Ciphers chacha20-poly1305@openssh.com
+#Ciphers blowfish-cbc,aes256-cbc,aes256-ctr
+#MACs hmac-sha2-256,hmac-sha2-512,hmac-sha1
+
+IgnoreRhosts yes
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+PermitEmptyPasswords no
+UsePrivilegeSeparation yes
+X11Forwarding no
+StrictModes yes
+
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+AuthenticationMethods publickey
+
+AllowTcpForwarding no
+AllowGroups ssh
+UseDNS no
+GatewayPorts no
+AllowAgentForwarding no
+
+ClientAliveInterval 300
+ClientAliveCountMax 0

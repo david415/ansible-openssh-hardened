@@ -1,0 +1,27 @@
+Host *
+
+Protocol 2
+Ciphers chacha20-poly1305@openssh.com,blowfish-cbc,aes256-ctr,aes256-cbc,aes128-ctr,aes128-cbc,3des-cbc
+MACs hmac-sha2-256,hmac-sha2-512
+
+ForwardAgent no
+ForwardX11 no
+ForwardX11Trusted no
+RhostsRSAAuthentication no
+RSAAuthentication yes
+PasswordAuthentication yes
+HostbasedAuthentication no
+GSSAPIAuthentication no
+GSSAPIDelegateCredentials no
+GSSAPIKeyExchange no
+GSSAPITrustDNS no
+BatchMode no
+CheckHostIP yes
+AddressFamily any
+StrictHostKeyChecking ask
+Port 22
+
+# XXX not your pony
+#SendEnv LANG LC_*
+
+HashKnownHosts yes

@@ -1,0 +1,8 @@
+---
+backports_url:
+backports_distribution_release:
+ssh_packages:
+  - openssh-client
+  - openssh-server
+sshd_hostkey_path: /etc/ssh/ssh_host_ed25519_key
+sshd_keygen_command: "ssh-keygen -f {{ sshd_hostkey_path }} -N '' -t ed25519"

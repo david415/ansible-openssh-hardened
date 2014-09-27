@@ -1,0 +1,40 @@
+---
+
+- name: ensure backports apt repo is setup
+  apt_repository: >
+    repo="deb {{ backports_url }} {{ backports_distribution_release }} main"
+    state=present 
+    update_cache=yes
+  sudo: yes
+  when: backports_url != ""
+
+- name: ensure openssh from backports is installed
+  apt: >
+    pkg="{{ item }}"
+    default_release="{{ backports_distribution_release }}"
+    state=present
+  sudo: yes
+  with_items: ssh_packages
+  when: backports_url != ""
+
+- name: get stat of sshd host key file
+  stat:
+    path="{{ sshd_hostkey_path }}"
+  register: sshd_hostkey_st
+
+- name: ensure sshd host key exists
+  command: "{{ sshd_keygen_command }}"
+  when: not sshd_hostkey_st.stat.exists
+
+- name: ensure ssh configuration files are present
+  copy: src={{ item }} dest=/etc/ssh/{{ item }} owner=root mode=0644
+  with_items:
+   - sshd_config
+   - ssh_config
+  notify:
+   - restart sshd
+
+- meta: flush_handlers
+
+- name: ensure sshd is running
+  service: name=ssh state=running
