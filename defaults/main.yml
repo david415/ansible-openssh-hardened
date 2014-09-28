@@ -1,4 +1,7 @@
 ---
+ssh_admin_ed25519pubkey_path: ""
+ssh_admin_user: "human"
+ssh_admin_group: "sudo"
 backports_url:
 backports_distribution_release:
 ssh_packages:
@@ -6,3 +9,4 @@ ssh_packages:
   - openssh-server
 sshd_hostkey_path: /etc/ssh/ssh_host_ed25519_key
 sshd_keygen_command: "ssh-keygen -f {{ sshd_hostkey_path }} -N '' -t ed25519"
+

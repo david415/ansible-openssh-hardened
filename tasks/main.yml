@@ -1,5 +1,16 @@
 ---
 
+- user:
+    name="{{ ssh_admin_user }}"
+    group="{{ ssh_admin_group }}"
+  when: ssh_admin_ed25519pubkey_path != ""
+
+- name: install user ssh key
+- authorized_key:
+    user="{{ ssh_admin_user }}"
+    key="{{ lookup('file', "{{ ssh_admin_ed25519pubkey_path }}") }}"
+  when: ssh_admin_ed25519pubkey_path != ""
+
 - name: ensure backports apt repo is setup
   apt_repository: >
     repo="deb {{ backports_url }} {{ backports_distribution_release }} main"

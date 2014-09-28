@@ -10,16 +10,16 @@
 * Operators are advised to use bcrypt KDF to protect keys at rest
 
 ::
-```
- ---
- - hosts: ssh-servers
-   user: human
-   connection: ssh
-   roles:
-     - { role: ansible-openssh-hardened,
-         backports_url: "http://ftp.de.debian.org/debian/",
-         backports_distribution_release: "wheezy-backports",
-         sudo: yes
-       }
-```
+
+   ---
+   - hosts: ssh-servers
+     user: human
+     connection: ssh
+     roles:
+       - { role: ansible-openssh-hardened,
+           backports_url: "http://ftp.de.debian.org/debian/",
+           backports_distribution_release: "wheezy-backports",
+           sudo: yes
+         }
+
 
