@@ -1,12 +1,13 @@
 ---
 
-- user:
+- name: ensure ssh admin user exists
+  user:
     name="{{ ssh_admin_user }}"
     group="{{ ssh_admin_group }}"
   when: ssh_admin_ed25519pubkey_path != ""
 
 - name: install user ssh key
-- authorized_key:
+  authorized_key:
     user="{{ ssh_admin_user }}"
     key="{{ lookup('file', "{{ ssh_admin_ed25519pubkey_path }}") }}"
   when: ssh_admin_ed25519pubkey_path != ""
