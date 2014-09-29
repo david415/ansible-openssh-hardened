@@ -7,18 +7,25 @@
 
 * Only use the new transport cipher! `chacha20-poly1305@openssh.com`
 
-* Operators are advised to use bcrypt KDF to protect keys at rest
+* Operators are advised to use bcrypt KDF to protect keys at rest...
+  If non-ed25519 keys are still in use then convert format with bcrypt stretching.
+  Here's uber-paranoid 1000 rounds of bcrypt for your entropic passphrase::
+    ssh-keygen -p -o -f ~/.ssh/id_rsa -a 1000
+
+
+Here's a minimal playbook demonstrating how I upgrade a Debian wheezy system to
+use wheezy-backports openssh-server and client
 
 ::
 
-   ---
-   - hosts: ssh-servers
-     user: human
-     connection: ssh
-     roles:
-       - { role: ansible-openssh-hardened,
-           backports_url: "http://ftp.de.debian.org/debian/",
-           backports_distribution_release: "wheezy-backports",
-           ssh_admin_ed25519pubkey_path: "/home/amnesia/.ssh/id_ed25519.pub",
-           sudo: yes
-         }
+    ---
+    - hosts: ssh-servers
+      user: human
+      connection: ssh
+      roles:
+        - { role: ansible-openssh-hardened,
+            backports_url: "http://ftp.de.debian.org/debian/",
+            backports_distribution_release: "wheezy-backports",
+            ssh_admin_ed25519pubkey_path: "/home/amnesia/.ssh/id_ed25519.pub",
+            sudo: yes
+          }
