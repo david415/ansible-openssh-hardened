@@ -6,13 +6,15 @@
     state=present 
     update_cache=yes
   sudo: yes
-  when: backports_url != ""
 
 - name: ensure openssh from backports is installed
-  command: "apt-get install -t {{ backports_distribution_release }} {{ item }} -y"
-  sudo: yes
+  apt:
+    name="{{ item }}"
+    state=latest
+    install_recommends=no
+    force=yes
+    default_release="{{ backports_distribution_release }}"
   with_items: ssh_packages
-  when: backports_url != ""
 
 - name: ensure ssh admin user exists
   user:
