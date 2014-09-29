@@ -1,17 +1,5 @@
 ---
 
-- name: ensure ssh admin user exists
-  user:
-    name="{{ ssh_admin_user }}"
-    group="{{ ssh_admin_group }}"
-  when: ssh_admin_ed25519pubkey_path != ""
-
-- name: install user ssh key
-  authorized_key:
-    user="{{ ssh_admin_user }}"
-    key="{{ lookup('file', "{{ ssh_admin_ed25519pubkey_path }}") }}"
-  when: ssh_admin_ed25519pubkey_path != ""
-
 - name: ensure backports apt repo is setup
   apt_repository: >
     repo="deb {{ backports_url }} {{ backports_distribution_release }} main"
@@ -21,13 +9,23 @@
   when: backports_url != ""
 
 - name: ensure openssh from backports is installed
-  apt: >
-    pkg="{{ item }}"
-    default_release="{{ backports_distribution_release }}"
-    state=present
+  command: "apt-get install -t {{ backports_distribution_release }} {{ item }} -y"
   sudo: yes
   with_items: ssh_packages
   when: backports_url != ""
+
+- name: ensure ssh admin user exists
+  user:
+    name="{{ ssh_admin_user }}"
+    groups="{{ ssh_admin_groups }}"
+  when: ssh_admin_ed25519pubkey_path != ""
+
+- name: install ssh admin user pub key
+  authorized_key:
+    user="{{ ssh_admin_user }}"
+    key="{{ lookup('file', "{{ ssh_admin_ed25519pubkey_path }}") }}"
+    manage_dir=yes
+  when: ssh_admin_ed25519pubkey_path != ""
 
 - name: get stat of sshd host key file
   stat:

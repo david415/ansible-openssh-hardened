@@ -1,7 +1,7 @@
 ---
 ssh_admin_ed25519pubkey_path: ""
 ssh_admin_user: "human"
-ssh_admin_group: "sudo"
+ssh_admin_groups: "sudo,ssh"
 backports_url:
 backports_distribution_release:
 ssh_packages:
