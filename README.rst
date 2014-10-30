@@ -6,11 +6,15 @@
 * Only use ed25519 keys with elliptic-curve Diffie–Hellman for key exchange
 
 * Only use the new transport cipher! `chacha20-poly1305@openssh.com`
+Here in this playbook I don't fuck around with any of the old ciphers for ssh.
+This requires OpenSSH 6.5 and later for both the client AND server.
+Don't carelessly mess around with this ansible role, lock yourself our of your servers
+and then send me pissed off e-mails about how it's all my fault. =-p
 
 * Operators are advised to use bcrypt KDF to protect keys at rest...
-  If non-ed25519 keys are still in use then convert format with bcrypt stretching.
+  Generate your new ed25519 ssh keys with bcrypt stretching.
   Here's uber-paranoid 1000 rounds of bcrypt for your entropic passphrase::
-    ssh-keygen -p -o -f ~/.ssh/id_rsa -a 1000
+    ssh-keygen -t ed25519 -o -a 1000 -f ~/.ssh/id_ed25519_new2u
 
 
 Here's a minimal playbook demonstrating how I upgrade a Debian wheezy system to
