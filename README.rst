@@ -8,7 +8,7 @@
 * Only use the new transport cipher! `chacha20-poly1305@openssh.com`
 Here in this playbook I don't fuck around with any of the old ciphers for ssh.
 This requires OpenSSH 6.5 and later for both the client AND server.
-Don't carelessly mess around with this ansible role, lock yourself our of your servers
+Don't carelessly mess around with this ansible role, lock yourself out of your servers
 and then send me pissed off e-mails about how it's all my fault. =-p
 
 * Operators are advised to use bcrypt KDF to protect keys at rest...
